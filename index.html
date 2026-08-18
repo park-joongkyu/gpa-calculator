@@ -11,7 +11,7 @@
   <div class="app">
     <header class="app-header">
       <h1>학점 계산기</h1>
-      <p class="subtitle">과목별 학점과 등급을 입력하면 평점평균(GPA)을 계산해드려요</p>
+      <p class="subtitle">학기별로 과목을 입력하면 학기 평점과 전체 누적 평점을 함께 계산해드려요</p>
     </header>
 
     <div class="toolbar">
@@ -23,34 +23,40 @@
       </select>
     </div>
 
-    <table class="course-table">
-      <thead>
-        <tr>
-          <th class="col-name">과목명</th>
-          <th class="col-credit">학점</th>
-          <th class="col-grade">등급</th>
-          <th class="col-remove"></th>
-        </tr>
-      </thead>
-      <tbody id="course-body">
-      </tbody>
-    </table>
-
-    <button id="add-row-btn" class="add-btn" type="button">+ 과목 추가</button>
-
-    <section class="summary">
+    <section class="summary overall-summary">
       <div class="summary-item">
-        <span class="summary-label">총 신청 학점</span>
+        <span class="summary-label">총 이수학점</span>
         <span class="summary-value" id="total-credits">0</span>
       </div>
-      <div class="summary-item">
-        <span class="summary-label">GPA 반영 학점</span>
-        <span class="summary-value" id="gpa-credits">0</span>
-      </div>
       <div class="summary-item highlight">
-        <span class="summary-label">평점평균 (GPA)</span>
+        <span class="summary-label">전체 평점</span>
         <span class="summary-value" id="gpa-result">0.00</span>
       </div>
+      <div class="summary-item">
+        <span class="summary-label">전공 평점</span>
+        <span class="summary-value" id="major-gpa-result">0.00</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">100점 환산</span>
+        <span class="summary-value" id="percent-result">0.0</span>
+      </div>
+    </section>
+
+    <div id="semester-list"></div>
+    <button id="add-semester-btn" class="add-btn" type="button">+ 학기 추가</button>
+
+    <section class="target-tool">
+      <h2>목표 평점 계산기</h2>
+      <p class="tool-desc">지금까지의 누적 학점·평점을 기준으로, 남은 학점에서 평균 몇 점을 받아야 목표 평점을 맞출 수 있는지 계산해요.</p>
+      <div class="target-inputs">
+        <label>목표 평점
+          <input id="target-gpa" type="number" min="0" step="0.01" placeholder="예: 4.0">
+        </label>
+        <label>남은 학점
+          <input id="remaining-credits" type="number" min="0" step="0.5" placeholder="예: 15">
+        </label>
+      </div>
+      <p class="target-result" id="target-result">과목을 입력하고 목표 평점과 남은 학점을 채워주세요.</p>
     </section>
 
     <div class="footer-actions">
