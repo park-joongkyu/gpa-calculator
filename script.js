@@ -235,6 +235,14 @@ function createSemesterCard(semester) {
   `;
   const tbody = table.querySelector("tbody");
 
+  const scrollHint = document.createElement("p");
+  scrollHint.className = "scroll-hint";
+  scrollHint.textContent = "← 표를 옆으로 밀면 등급·삭제까지 볼 수 있어요";
+
+  const tableScroll = document.createElement("div");
+  tableScroll.className = "table-scroll";
+  tableScroll.appendChild(table);
+
   const addRowBtn = document.createElement("button");
   addRowBtn.type = "button";
   addRowBtn.className = "add-row-btn";
@@ -245,7 +253,8 @@ function createSemesterCard(semester) {
   });
 
   card.appendChild(header);
-  card.appendChild(table);
+  card.appendChild(scrollHint);
+  card.appendChild(tableScroll);
   card.appendChild(addRowBtn);
 
   semester._cardEl = card;
