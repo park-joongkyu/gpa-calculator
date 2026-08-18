@@ -29,6 +29,7 @@ const CATEGORIES = ["전공", "교양", "기타"];
 const STORAGE_KEY = "gpa-calculator-state-v2";
 
 const scaleSelect = document.getElementById("scale-select");
+const precisionToggle = document.getElementById("precision-toggle");
 const semesterList = document.getElementById("semester-list");
 const addSemesterBtn = document.getElementById("add-semester-btn");
 const resetBtn = document.getElementById("reset-btn");
@@ -51,6 +52,16 @@ function pointMapFor(scale) {
 
 function formatNumber(n) {
   return Number.isInteger(n) ? String(n) : n.toFixed(1);
+}
+
+function formatDecimal(value, fallbackDigits) {
+  return precisionToggle.checked ? String(value) : value.toFixed(fallbackDigits);
+}
+
+function setSummaryValue(el, value, fallbackDigits) {
+  const text = formatDecimal(value, fallbackDigits);
+  el.textContent = text;
+  el.classList.toggle("long-value", text.length > 7);
 }
 
 // ---------- course row ----------
@@ -337,16 +348,17 @@ function recalcAll() {
     });
 
     const sGpa = sGpaCredits > 0 ? sPoints / sGpaCredits : 0;
-    semester._statsEl.innerHTML = `학점 <strong>${formatNumber(sCredits)}</strong> · 평점 <strong>${sGpa.toFixed(2)}</strong>`;
+    semester._statsEl.innerHTML = `학점 <strong>${formatNumber(sCredits)}</strong> · 평점 <strong>${formatDecimal(sGpa, 2)}</strong>`;
   });
 
   const gpa = gpaCredits > 0 ? totalPoints / gpaCredits : 0;
   const majorGpa = majorGpaCredits > 0 ? majorTotalPoints / majorGpaCredits : 0;
+  const percent = scaleMax > 0 ? (gpa / scaleMax) * 100 : 0;
 
   totalCreditsEl.textContent = formatNumber(totalCredits);
-  gpaResultEl.textContent = gpa.toFixed(2);
-  majorGpaResultEl.textContent = majorGpa.toFixed(2);
-  percentResultEl.textContent = scaleMax > 0 ? ((gpa / scaleMax) * 100).toFixed(1) : "0.0";
+  setSummaryValue(gpaResultEl, gpa, 2);
+  setSummaryValue(majorGpaResultEl, majorGpa, 2);
+  setSummaryValue(percentResultEl, percent, 1);
 
   updateTargetResult(gpaCredits, totalPoints, scaleMax);
   persist();
@@ -377,10 +389,10 @@ function updateTargetResult(gpaCredits, totalPoints, scaleMax) {
     targetResultEl.innerHTML = `이미 목표 평점 <strong>${target.toFixed(2)}</strong>을 넘었어요. 남은 ${formatNumber(remaining)}학점은 낙제만 피하면 돼요.`;
   } else if (requiredAvg > scaleMax) {
     targetResultEl.classList.add("danger");
-    targetResultEl.innerHTML = `이 등급 체계(최대 ${scaleMax})에서는 남은 ${formatNumber(remaining)}학점만으로 도달할 수 없어요. 필요 평균 <strong>${requiredAvg.toFixed(2)}</strong>`;
+    targetResultEl.innerHTML = `이 등급 체계(최대 ${scaleMax})에서는 남은 ${formatNumber(remaining)}학점만으로 도달할 수 없어요. 필요 평균 <strong>${formatDecimal(requiredAvg, 2)}</strong>`;
   } else {
     if (requiredAvg >= scaleMax - 0.5) targetResultEl.classList.add("warn");
-    targetResultEl.innerHTML = `남은 ${formatNumber(remaining)}학점에서 평균 <strong>${requiredAvg.toFixed(2)}</strong>점 이상 받으면 목표 평점 ${target.toFixed(2)}을 달성해요.`;
+    targetResultEl.innerHTML = `남은 ${formatNumber(remaining)}학점에서 평균 <strong>${formatDecimal(requiredAvg, 2)}</strong>점 이상 받으면 목표 평점 ${target.toFixed(2)}을 달성해요.`;
   }
 }
 
@@ -389,6 +401,7 @@ function updateTargetResult(gpaCredits, totalPoints, scaleMax) {
 function persist() {
   const state = {
     scale: scaleSelect.value,
+    precise: precisionToggle.checked,
     targetGpa: targetGpaInput.value,
     remainingCredits: remainingCreditsInput.value,
     semesters: semesters.map((s) => ({
@@ -412,6 +425,7 @@ function loadState() {
     if (state.scale && GRADE_SCALES[state.scale]) {
       scaleSelect.value = state.scale;
     }
+    if (typeof state.precise === "boolean") precisionToggle.checked = state.precise;
     if (typeof state.targetGpa === "string") targetGpaInput.value = state.targetGpa;
     if (typeof state.remainingCredits === "string") remainingCreditsInput.value = state.remainingCredits;
 
@@ -431,6 +445,8 @@ scaleSelect.addEventListener("change", () => {
   refreshAllGradeOptions();
   recalcAll();
 });
+
+precisionToggle.addEventListener("change", () => recalcAll());
 
 addSemesterBtn.addEventListener("click", () => {
   addSemester({});

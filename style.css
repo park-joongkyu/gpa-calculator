@@ -80,6 +80,23 @@ body {
 
 .toolbar select { flex: 1; min-width: 0; }
 
+.precision-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.precision-toggle input {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
 /* Overall summary */
 .summary {
   display: grid;
@@ -115,6 +132,11 @@ body {
   display: block;
   font-size: 1.15rem;
   font-weight: 700;
+  word-break: break-all;
+}
+
+.summary-value.long-value {
+  font-size: 0.88rem;
 }
 
 .summary-item.highlight .summary-value {
