@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학점 계산기</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>학점 계산기</h1>
+      <p class="subtitle">과목별 학점과 등급을 입력하면 평점평균(GPA)을 계산해드려요</p>
+    </header>
+
+    <div class="toolbar">
+      <label for="scale-select">등급 체계</label>
+      <select id="scale-select">
+        <option value="4.5">4.5 만점 (A+ 4.5 · B+ 3.5 · C+ 2.5 …)</option>
+        <option value="4.3">4.3 만점 (A+ 4.3 · A0 4.0 · A- 3.7 …)</option>
+        <option value="4.0">4.0 만점 (A+/A 4.0 · A- 3.7 · B+ 3.3 …)</option>
+      </select>
+    </div>
+
+    <table class="course-table">
+      <thead>
+        <tr>
+          <th class="col-name">과목명</th>
+          <th class="col-credit">학점</th>
+          <th class="col-grade">등급</th>
+          <th class="col-remove"></th>
+        </tr>
+      </thead>
+      <tbody id="course-body">
+      </tbody>
+    </table>
+
+    <button id="add-row-btn" class="add-btn" type="button">+ 과목 추가</button>
+
+    <section class="summary">
+      <div class="summary-item">
+        <span class="summary-label">총 신청 학점</span>
+        <span class="summary-value" id="total-credits">0</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">GPA 반영 학점</span>
+        <span class="summary-value" id="gpa-credits">0</span>
+      </div>
+      <div class="summary-item highlight">
+        <span class="summary-label">평점평균 (GPA)</span>
+        <span class="summary-value" id="gpa-result">0.00</span>
+      </div>
+    </section>
+
+    <div class="footer-actions">
+      <button id="reset-btn" class="reset-btn" type="button">전체 초기화</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

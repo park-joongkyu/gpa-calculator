@@ -1,0 +1,205 @@
+:root {
+  --bg: #f5f6fa;
+  --card-bg: #ffffff;
+  --border: #e2e4ea;
+  --text: #1f2330;
+  --text-muted: #6b7080;
+  --accent: #3f5efb;
+  --accent-soft: #eef0ff;
+  --danger: #e5484d;
+  --radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161f;
+    --card-bg: #1c1f2b;
+    --border: #2c3040;
+    --text: #eceef5;
+    --text-muted: #9297ab;
+    --accent: #7c93ff;
+    --accent-soft: #262c4a;
+    --danger: #ff6b6f;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 32px 16px 64px;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px 32px;
+}
+
+.app-header h1 {
+  margin: 0 0 6px;
+  font-size: 1.6rem;
+}
+
+.subtitle {
+  margin: 0 0 24px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.toolbar label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.toolbar select {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.course-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+}
+
+.course-table th {
+  text-align: left;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 0 6px 6px;
+}
+
+.course-table td {
+  padding: 4px 6px;
+  vertical-align: middle;
+}
+
+.col-credit { width: 78px; }
+.col-grade { width: 96px; }
+.col-remove { width: 32px; }
+
+.course-table input[type="text"],
+.course-table input[type="number"],
+.course-table select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.remove-row-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.remove-row-btn:hover {
+  color: var(--danger);
+  background: var(--accent-soft);
+}
+
+.add-btn {
+  width: 100%;
+  padding: 10px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.add-btn:hover {
+  background: var(--accent-soft);
+}
+
+.summary {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.summary-item {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.summary-item.highlight {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.summary-value {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.summary-item.highlight .summary-value {
+  color: var(--accent);
+}
+
+.footer-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reset-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 4px;
+}
+
+.reset-btn:hover {
+  color: var(--danger);
+}
+
+@media (max-width: 420px) {
+  .app { padding: 20px 14px 26px; }
+  .col-grade { width: 84px; }
+}
